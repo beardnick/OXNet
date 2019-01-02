@@ -2,6 +2,7 @@ import random
 import math
 import threading
 import time
+import pymysql
 
 # 正弦信号的振幅，可以用于表征呼吸的强度
 a = 0.3
@@ -51,6 +52,8 @@ def head_signal():
 
 
 def sampling():
+    db = pymysql.connect("123.207.19.172", "root", "123456","oxnet")
+    cursor = db.cursor()
     cnt = 0
     while True:
         time.sleep(0.02)
@@ -60,8 +63,13 @@ def sampling():
         z_ = f * math.cos(2 * math.pi * (90 + z_angle) / 360.)
         y_ = f * math.sin(2 * math.pi * (90 + z_angle) / 360.)
         x_ = 0
-        print("%d\tx:%.1f\ty:%.1f\tz:%.1f" % (cnt, x_, y_, z_))
-        print("a:%f\tw:%f\tbody_a:%f\tz_angle:%d\t" % (a, w, body_a, z_angle))
+        # print("%d\tx:%.1f\ty:%.1f\tz:%.1f" % (cnt, x_, y_, z_))
+        # print("a:%f\tw:%f\tbody_a:%f\tz_angle:%d\t" % (a, w, body_a, z_angle))
+        # print("analize:%f"%(math.sqrt(x_ ** 2 + y_ ** 2 + z_ ** 2)))
+        sql = "insert  into ox_data(x,y,z) values(%f, %f, %f);" %(x_, y_, z_)
+        print("sql:", sql)
+        cursor.execute(sql)
+        db.commit()
 
 
 if __name__ == '__main__':
