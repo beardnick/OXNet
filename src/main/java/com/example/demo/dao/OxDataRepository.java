@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface OxDataRepository extends JpaRepository<OxData, Long> {
     public List<OxData> findAll();
-
 }

@@ -25,7 +25,7 @@ def breath_signal():
         global w
         a = random.random() * 0.4 + 0.1 + noise()
         # w range 2PI - 20PI
-        w = random.random() * 18 * math.pi + 2 * math.pi
+        w = random.random() * 2 * math.pi + 2 * math.pi
 
 
 def body_signal():
@@ -52,7 +52,7 @@ def head_signal():
 
 
 def sampling():
-    db = pymysql.connect("123.207.19.172", "root", "123456","oxnet")
+    db = pymysql.connect("123.207.19.172", "root", "qianz","oxnet")
     cursor = db.cursor()
     cnt = 0
     while True:
